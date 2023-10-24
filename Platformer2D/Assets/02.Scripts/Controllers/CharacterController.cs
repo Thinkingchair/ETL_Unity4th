@@ -128,7 +128,10 @@ namespace Platformer.Controllers
 
         public float hpMin => 0f;
 
+        public bool invincible { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private float _hp;
+
         [SerializeField] private float _hpMax;
         public event Action<float> onHpChanged;
         public event Action<float> onHpRecovered;
