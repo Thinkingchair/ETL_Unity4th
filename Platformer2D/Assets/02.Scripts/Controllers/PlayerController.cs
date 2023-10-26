@@ -84,6 +84,11 @@ namespace Platformer.Controllers
             {
                 machine.ChangeState(CharacterStateID.Slide);
             }
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                machine.ChangeState(CharacterStateID.Attack);
+            }
         }
     }
 }

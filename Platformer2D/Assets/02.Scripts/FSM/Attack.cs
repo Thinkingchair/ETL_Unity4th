@@ -1,5 +1,6 @@
 using Platformer.Animations;
 using Platformer.Stats;
+using Platformer.Datum;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -56,21 +57,12 @@ namespace Platformer.FSM.Character
         private float _exitTimeMark; // 마지막 공격 끝난 시간
         private bool _hasHit; // 현재 공격 히트판정 됐는지 ?
 
-        public class AttackSetting
-        {
-            public int targetMax; // 최대 타게팅 수
-            public LayerMask targetMask; // 타겟 검출 마스크 
-            public float damageGain; // 공격 계수
-            public Vector2 castCenter; // 타겟 감지 형상(사각형) 범위 중심
-            public Vector2 castSize; // 타겟 감지 형상 크기
-            public float castDistance; // 타겟 감지 형상 빔 거리 
-        }
 
-        private AttackSetting[] _attackSettings;
+        private SkillCastSetting[] _attackSettings;
         private List<IHp> _targets = new List<IHp>();
         private CharacterAnimationEvents _animationEvents;
 
-        public Attack(CharacterMachine machine, AttackSetting[] attackSettings, float comboResetTime) 
+        public Attack(CharacterMachine machine, float comboResetTime, SkillCastSetting[] attackSettings) 
             : base(machine)
         {
             _attackSettings = attackSettings;
@@ -99,7 +91,7 @@ namespace Platformer.FSM.Character
             controller.isMovable = controller.isGrounded;
             _hasHit = false;
 
-            AttackSetting setting = _attackSettings[_comboStack];
+            SkillCastSetting setting = _attackSettings[_comboStack];
             RaycastHit2D[] hits =
                 Physics2D.BoxCastAll(origin: rigidbody.position + new Vector2(setting.castCenter.x * controller.direction, setting.castCenter.y),
                                      size: setting.castSize,
